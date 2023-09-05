@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { FONT_SIZE_14 } from "../Theme/tipografia";
 import { COR_PADRAO, ERROR_COLOR, INPUT_COLOR, WHITE } from "../utils/constants";
 
-export default function CustomInput({label, placeholder, value, onChange, secure=false, isInvalid=false }) {
+export default function CustomInput({label, placeholder, value, onChange, secure=false, isInvalid=false, type='default' }) {
 
 
     return(
@@ -16,6 +16,7 @@ export default function CustomInput({label, placeholder, value, onChange, secure
                 value={value}
                 onChangeText={onChange}
                 secureTextEntry={secure}
+                keyboardType={type}
             />
         </View>
     )
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
 
     input : {
         backgroundColor : INPUT_COLOR,
-        padding : 5,
+        padding : 10,
         borderRadius : 5,
         borderBottomWidth : 5,
         borderColor : COR_PADRAO,

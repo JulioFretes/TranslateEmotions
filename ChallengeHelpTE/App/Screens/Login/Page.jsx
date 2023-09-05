@@ -10,7 +10,7 @@ import * as yup from 'yup'
 export default function Login() {
 
     const schema = yup.object({
-        username: yup.string().required("Informe seu username"),
+        username: yup.string().required("Informe seu usuário").min(4, "Usuário deve conter no minimo 4 dígitos"),
         senha: yup.string().min(6, "A senha deve conter 6 digitos").required("Informe sua senha")
     })
 

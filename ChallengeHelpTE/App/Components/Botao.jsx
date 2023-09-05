@@ -26,7 +26,7 @@ export default function Botao({titulo, onPressBtn, stroke}) {
 const styles = StyleSheet.create({
     botao : {
         backgroundColor : COR_PADRAO,
-        padding : 10,
+        padding : 15,
         borderRadius : 15,
         marginVertical : 10,
         borderWidth : 1,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
     botaoStroke : {
         backgroundColor : 'transparent',
-        padding : 10,
+        padding : 15,
         borderRadius : 15,
         marginVertical : 10,
         borderWidth : 2,
