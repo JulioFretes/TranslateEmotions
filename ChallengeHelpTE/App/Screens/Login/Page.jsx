@@ -9,10 +9,12 @@ import * as yup from 'yup'
 import { useTranslation } from "react-i18next";
 
 export default function Login() {
+    
+    const { t } = useTranslation();
 
     const schema = yup.object({
-        username: yup.string().required("Informe seu usuário").min(4, "Usuário deve conter no minimo 4 dígitos"),
-        senha: yup.string().min(6, "A senha deve conter 6 digitos").required("Informe sua senha")
+        username: yup.string().required(t('ER_user')).min(4, t('ER_user_len')),
+        senha: yup.string().min(6, t('ER_senha_len')).required(t('ER_senha'))
     })
 
     const {control, handleSubmit, formState:{ errors }} = useForm({
@@ -23,7 +25,6 @@ export default function Login() {
        console.log(data)
     }
 
-    const { t } = useTranslation();
     
     return(
         <ScrollView style={{backgroundColor : WHITE}}>

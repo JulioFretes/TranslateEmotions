@@ -9,24 +9,27 @@ import * as yup from 'yup'
 import { useTranslation } from "react-i18next";
 
 export default function Cadastro() {
+    
+    const { t } = useTranslation();
 
     const schema = yup.object({
         nome: yup.string()
-            .required("Informe seu nome"),
+            .required(t('ER_nome')),
         email: yup.string()
-            .email('Por favor, insira um endereço de email válido.')
-            .required('O email é obrigatório.'),
+            .email(t('ER_invalid_email'))
+            .required(t('ER_email')),
         idade: yup.number()
-            .typeError('Informe um número válido')
-            .integer("Deve ser um número inteiro")
-            .positive("Deve ser um número positivo")
-            .max(100, "Uma idade muito alta não acha?")
-            .required("Informe sua idade"),
+            .typeError('ER_invalid_idade')
+            .integer(t('ER_int'))
+            .positive(t('ER_positivo'))
+            .max(100, t('ER_invalid_idade'))
+            .required(t('ER_idade')),
         usuario: yup.string()
-            .required("Informe seu usuário")
-            .min(4, "Usuário deve conter no minimo 4 dígitos"),
+            .required(t('ER_user'))
+            .min(4, t('ER_user_len')),
         senha: yup.string()
-            .required("Informe uma senha")
+            .min(6, t('ER_senha_len'))
+            .required(t('ER_senha'))
     })
 
     const {control, handleSubmit, formState:{ errors }} = useForm({
@@ -37,7 +40,6 @@ export default function Cadastro() {
         console.log(data)
     }
 
-    const { t } = useTranslation();
 
     return(
         <ScrollView style={{backgroundColor : WHITE}}>
@@ -64,7 +66,7 @@ export default function Cadastro() {
                     control={control}
                     name="idade"
                     render={({ field : { onChange, onBlur, value } }) => (
-                        <CustomInput label={t('idade')} placeholder={"Exemplo: 25"} onChange={onChange} value={value} isInvalid={errors.idade} type={"numeric"}/>
+                        <CustomInput label={t('idade')} placeholder={t('PH_idade')} onChange={onChange} value={value} isInvalid={errors.idade} type={"numeric"}/>
                     )}
                 />
                 {errors.idade !== undefined && <Text style={styles.error}>{errors.idade?.message}</Text>}
