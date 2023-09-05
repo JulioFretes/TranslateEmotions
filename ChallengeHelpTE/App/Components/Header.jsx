@@ -2,14 +2,18 @@ import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { COR_PADRAO } from "../utils/constants";
 import { View } from "react-native";
 import { FONT_SIZE_16, FONT_SIZE_48 } from "../Theme/tipografia";
+import { useTranslation } from "react-i18next";
 
 export default function Header() {
+
+    const { t } = useTranslation();
+
     return(
         <SafeAreaView style={styles.header}>
             <Text style={styles.titulo}>HELP<Text style={styles.textLogo}>TE</Text></Text>
             <View style={styles.sloganView}>
-                <Text style={styles.slogan}>Compreendendo Além das Palavras</Text>
-                <Text style={styles.slogan}>A IA que Traduz Suas Emoções.</Text>
+                <Text style={styles.slogan}>{t('slogan1')}</Text>
+                <Text style={styles.slogan}>{t('slogan2')}</Text>
             </View>
         </SafeAreaView>
     );   

@@ -6,6 +6,7 @@ import { ERROR_COLOR, WHITE } from "../../utils/constants";
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
 
@@ -21,6 +22,8 @@ export default function Login() {
     const handleLogin = (data) => {
        console.log(data)
     }
+
+    const { t } = useTranslation();
     
     return(
         <ScrollView style={{backgroundColor : WHITE}}>
@@ -29,7 +32,7 @@ export default function Login() {
                 control={control}
                 name="username"
                 render={({ field : { onChange, onBlur, value } }) => (
-                    <CustomInput label={'Nome de Usuário'} placeholder={'Exemplo: Usuário123'} onChange={onChange} value={value} isInvalid={errors.username}/>
+                    <CustomInput label={t('user')} placeholder={t('PH_user')} onChange={onChange} value={value} isInvalid={errors.username}/>
                 )}
             />
             {errors.username && <Text style={styles.error}>{errors.username?.message}</Text>}
@@ -38,13 +41,13 @@ export default function Login() {
                 control={control}
                 name="senha"
                 render={({ field : { onChange, onBlur, value } }) => (
-                    <CustomInput label={'Senha'} placeholder={'Exemplo: Senha123'} secure={true} onChange={onChange} value={value} isInvalid={errors.senha}/>       
+                    <CustomInput label={t('senha')} placeholder={t('PH_senha')} secure={true} onChange={onChange} value={value} isInvalid={errors.senha}/>       
                 )}
             />
             {errors.senha && <Text style={styles.error}>{errors.senha?.message}</Text>}
 
             <View style={{width : '90%', paddingTop : 10}}>
-                <Botao titulo={'ENTRAR'} onPressBtn={handleSubmit(handleLogin)}/>
+                <Botao titulo={t('login')} onPressBtn={handleSubmit(handleLogin)}/>
             </View>
         </SafeAreaView>
         </ScrollView>

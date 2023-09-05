@@ -3,10 +3,14 @@ import Header from "../../Components/Header";
 import Botao from "../../Components/Botao";
 import { useNavigation } from "@react-navigation/native";
 import { CONTAINER } from "../../Theme/styles";
+import { useTranslation } from 'react-i18next';
+import i18n from "../../language/i18n";
 
 export default function PaginaInicial() {
     
     const navigation = useNavigation();
+
+    const { t, i18n } = useTranslation();
 
     const navegarLogin = () => {
         navigation.navigate("Login");
@@ -20,8 +24,8 @@ export default function PaginaInicial() {
         <SafeAreaView style={styles.content}>
             <Header/>
             <View style={styles.btnCointainer}>
-                <Botao titulo={'ENTRAR'} onPressBtn={navegarLogin}/>
-                <Botao titulo={'CADASTRO'} onPressBtn={navegarCadastro} stroke={true}/>
+                <Botao titulo={t('login')} onPressBtn={navegarLogin}/>
+                <Botao titulo={t('cadastro')} onPressBtn={navegarCadastro} stroke={true}/>
             </View>
         </SafeAreaView>
     );

@@ -6,6 +6,7 @@ import { ERROR_COLOR, WHITE } from "../../utils/constants";
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useTranslation } from "react-i18next";
 
 export default function Cadastro() {
 
@@ -36,6 +37,8 @@ export default function Cadastro() {
         console.log(data)
     }
 
+    const { t } = useTranslation();
+
     return(
         <ScrollView style={{backgroundColor : WHITE}}>
             <SafeAreaView style={styles.container}>
@@ -43,7 +46,7 @@ export default function Cadastro() {
                     control={control}
                     name="nome"
                     render={({ field : { onChange, onBlur, value } }) => (
-                        <CustomInput label={'Nome'} placeholder={"Exemplo: João"} onChange={onChange} value={value} isInvalid={errors.nome}/>
+                        <CustomInput label={t('nome')} placeholder={t('PH_nome')} onChange={onChange} value={value} isInvalid={errors.nome}/>
                     )}
                 />
                 {errors.nome && <Text style={styles.error}>{errors.nome?.message}</Text>}
@@ -52,7 +55,7 @@ export default function Cadastro() {
                     control={control}
                     name="email"
                     render={({ field : { onChange, onBlur, value } }) => (
-                        <CustomInput label={'Email'} placeholder={"Exemplo: João123@email.com"} onChange={onChange} value={value} isInvalid={errors.email} type={'email-address'}/>
+                        <CustomInput label={'Email'} placeholder={t('PH_email')} onChange={onChange} value={value} isInvalid={errors.email} type={'email-address'}/>
                     )}
                 />
                 {errors.email && <Text style={styles.error}>{errors.email?.message}</Text>}
@@ -61,7 +64,7 @@ export default function Cadastro() {
                     control={control}
                     name="idade"
                     render={({ field : { onChange, onBlur, value } }) => (
-                        <CustomInput label={'Idade'} placeholder={"Exemplo: 25"} onChange={onChange} value={value} isInvalid={errors.idade} type={"numeric"}/>
+                        <CustomInput label={t('idade')} placeholder={"Exemplo: 25"} onChange={onChange} value={value} isInvalid={errors.idade} type={"numeric"}/>
                     )}
                 />
                 {errors.idade !== undefined && <Text style={styles.error}>{errors.idade?.message}</Text>}
@@ -70,7 +73,7 @@ export default function Cadastro() {
                     control={control}
                     name="usuario"
                     render={({ field : { onChange, onBlur, value } }) => (
-                        <CustomInput label={'Usuário'} placeholder={"Exemplo: joão123"} onChange={onChange} value={value} isInvalid={errors.usuario}/>
+                        <CustomInput label={t('user')} placeholder={t('PH_user')} onChange={onChange} value={value} isInvalid={errors.usuario}/>
                     )}
                 />
                 {errors.usuario && <Text style={styles.error}>{errors.usuario?.message}</Text>}
@@ -79,13 +82,13 @@ export default function Cadastro() {
                     control={control}
                     name="senha"
                     render={({ field : { onChange, onBlur, value } }) => (
-                        <CustomInput label={'Crie uma senha'} onChange={onChange} value={value} secure={true} isInvalid={errors.senha}/>
+                        <CustomInput label={t('senha')} placeholder={t('PH_senha')} onChange={onChange} value={value} secure={true} isInvalid={errors.senha}/>
                     )}
                 />
                 {errors.senha && <Text style={styles.error}>{errors.senha?.message}</Text>}
 
                 <View style={{width : '90%', paddingVertical : 15}}>
-                        <Botao titulo={'PRÓXIMO'} onPressBtn={handleSubmit(handleCadastro)}/>
+                        <Botao titulo={t('prox')} onPressBtn={handleSubmit(handleCadastro)}/>
                 </View>
             </SafeAreaView>
         </ScrollView>
