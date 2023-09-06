@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import CustomInput from "../../Components/CustomInput";
 import Botao from "../../Components/Botao";
 import { CONTAINER_CENTER } from "../../Theme/styles";
@@ -7,10 +7,13 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Login() {
     
     const { t } = useTranslation();
+    const navigation = useNavigation();
 
     const schema = yup.object({
         username: yup.string().required(t('ER_user')).min(4, t('ER_user_len')),
@@ -18,11 +21,13 @@ export default function Login() {
     })
 
     const {control, handleSubmit, formState:{ errors }} = useForm({
-        resolver: yupResolver(schema)
+        // resolver: yupResolver(schema)
     })
 
     const handleLogin = (data) => {
        console.log(data)
+       navigation.navigate('Home')
+
     }
 
     

@@ -53,9 +53,9 @@ i18n
           PH_idade: 'Exemplo: 25',
           nome: 'Nome',
           ER_user: 'Informe seu usuário',
-          ER_user_len: 'Deve conter no minimo 4 dígitos',
+          ER_user_len: 'Deve conter no mínimo 4 dígitos',
           ER_senha: 'Digite uma senha',
-          ER_senha_len: 'Deve conter no minimo 6 dígitos',
+          ER_senha_len: 'Deve conter no mínimo 6 dígitos',
           ER_nome: 'Informe seu nome',
           ER_email: 'E-mail é obrigatório',
           ER_invalid_email: 'Insira um e-mail válido',
@@ -67,7 +67,7 @@ i18n
       },
       // Adicione mais idiomas e traduções conforme necessário
     },
-    lng: 'en', // Idioma padrão
+    lng: 'pt', // Idioma padrão
     fallbackLng: 'en', // Idioma de fallback se o idioma do dispositivo não estiver disponível
     interpolation: {
       escapeValue: false, // Permite interpolção de variáveis nas traduções

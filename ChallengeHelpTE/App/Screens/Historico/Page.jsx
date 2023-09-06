@@ -1,12 +1,11 @@
 import { StyleSheet, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { CONTAINER_CENTER } from "../../Theme/styles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-
-export default function Home() {
+export default function Historico() {
     return(
         <SafeAreaView style={styles.containter}>
-            <Text>Página Home</Text>
+            <Text>Página de hisótico das frases já avaliadas</Text>
         </SafeAreaView>
     )
 }

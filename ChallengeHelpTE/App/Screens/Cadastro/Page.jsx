@@ -1,4 +1,5 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View,  } from "react-native";
+import { ScrollView, StyleSheet, Text, View,  } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../Components/CustomInput";
 import { CONTAINER_CENTER, CONTAINER_END } from "../../Theme/styles";
 import Botao from "../../Components/Botao";
@@ -7,10 +8,12 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Cadastro() {
     
     const { t } = useTranslation();
+    const navigation = useNavigation();
 
     const schema = yup.object({
         nome: yup.string()
@@ -19,7 +22,7 @@ export default function Cadastro() {
             .email(t('ER_invalid_email'))
             .required(t('ER_email')),
         idade: yup.number()
-            .typeError('ER_invalid_idade')
+            .typeError(t('ER_invalid_idade'))
             .integer(t('ER_int'))
             .positive(t('ER_positivo'))
             .max(100, t('ER_invalid_idade'))
@@ -33,11 +36,12 @@ export default function Cadastro() {
     })
 
     const {control, handleSubmit, formState:{ errors }} = useForm({
-        resolver: yupResolver(schema)
+        // resolver: yupResolver(schema)
     })
 
     const handleCadastro = (data) => {
         console.log(data)
+        navigation.navigate('Linguagem')
     }
 
 
