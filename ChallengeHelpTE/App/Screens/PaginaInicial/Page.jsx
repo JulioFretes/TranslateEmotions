@@ -5,13 +5,12 @@ import Botao from "../../Components/Botao";
 import { useNavigation } from "@react-navigation/native";
 import { CONTAINER } from "../../Theme/styles";
 import { useTranslation } from 'react-i18next';
-import i18n from "../../language/i18n";
 
 export default function PaginaInicial() {
     
     const navigation = useNavigation();
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const navegarLogin = () => {
         navigation.navigate("Login");

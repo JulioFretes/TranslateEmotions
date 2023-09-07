@@ -33,7 +33,8 @@ i18n
           ER_idade: 'Age is required',
           ER_invalid_idade: 'Invalid Age',
           ER_int: 'Must be an integer number',
-          ER_positivo: 'Must be an positive number.'
+          ER_positivo: 'Must be an positive number.',
+          confirmar : 'CONFIRM'
         },
       },
       pt: {
@@ -62,7 +63,8 @@ i18n
           ER_idade: 'Informe sua idade',
           ER_invalid_idade: 'Idade inválida',
           ER_int: 'Deve ser um número inteiro',
-          ER_positivo: 'Deve ser um número positivo'
+          ER_positivo: 'Deve ser um número positivo',
+          confirmar : 'CONFIRMAR'
         },
       },
       // Adicione mais idiomas e traduções conforme necessário
