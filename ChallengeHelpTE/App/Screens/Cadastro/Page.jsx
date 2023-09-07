@@ -36,7 +36,7 @@ export default function Cadastro() {
     })
 
     const {control, handleSubmit, formState:{ errors }} = useForm({
-        // resolver: yupResolver(schema)
+        resolver: yupResolver(schema)
     })
 
     const handleCadastro = (data) => {
