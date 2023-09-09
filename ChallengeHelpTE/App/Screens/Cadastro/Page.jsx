@@ -1,4 +1,5 @@
 import { ScrollView, StyleSheet, Text, View,  } from "react-native";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../../Components/CustomInput";
 import { CONTAINER_CENTER, CONTAINER_END } from "../../Theme/styles";
@@ -9,6 +10,9 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
+import axios from 'axios';
+
+const api = axios.create({baseURL: "http://localhost:8080"})
 
 export default function Cadastro() {
     
@@ -40,7 +44,11 @@ export default function Cadastro() {
     })
 
     const handleCadastro = (data) => {
-        console.log(data)
+        api.post("/usuario", JSON.stringify(data), {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
         navigation.navigate('Linguagem')
     }
 

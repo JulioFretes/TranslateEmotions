@@ -3,26 +3,34 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import PaginaIncial from './App/Screens/PaginaInicial/Page'
 import Login from './App/Screens/Login/Page';
 import Cadastro from './App/Screens/Cadastro/Page';
+import TextoInput from './App/Screens/TextoInput/Page';
 import Dialogo from './App/Screens/Dialogo/Page';
 import Home from './App/Screens/Home/Page';
 import Linguagem from './App/Screens/Cadastro/Linguagem/Page';
 import Termos from './App/Screens/Cadastro/Termos/Page';
 import './App/language/i18n';
 import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { changeLanguage } from 'i18next';
 
 
 export default function App() {
 
   useEffect(() => {
-    
+    getLinguagem()
   }, []);
+
+  const getLinguagem = async () => {
+    const resultado =  await AsyncStorage.getItem('linguagem');
+    resultado !== null ? changeLanguage(resultado) : changeLanguage('en');
+  }
 
   const Stack = createStackNavigator();
 
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName='Linguagem' 
+        initialRouteName='TextoInput' 
         screenOptions={{
           gestureEnabled : true,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
@@ -75,6 +83,11 @@ export default function App() {
           options={{
             headerShown : false
           }}
+        />
+
+      <Stack.Screen
+          name='TextoInput'
+          component={TextoInput}
         />
       </Stack.Navigator>
     </NavigationContainer>
