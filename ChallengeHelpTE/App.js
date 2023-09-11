@@ -32,7 +32,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName='Histórico' 
+        initialRouteName='PaginaInicial' 
         screenOptions={{
           gestureEnabled : true,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
@@ -58,38 +58,29 @@ export default function App() {
       <Stack.Screen
           name='Dialogo'
           component={Dialogo}
-          options={{
-            headerShown : false
-          }}
         />
 
       <Stack.Screen
           name='Home'
           component={Home}
-          options={{
-            headerShown : false
-          }}
         />
 
       <Stack.Screen
           name='Linguagem'
           component={Linguagem}
-          options={{
-            headerShown : false
-          }}
         />
 
       <Stack.Screen
           name='Termos'
           component={Termos}
-          options={{
-            headerShown : false
-          }}
         />
 
       <Stack.Screen
           name='TextoInput'
           component={TextoInput}
+          options={{
+            headerTitle : 'Diálogo por texto'
+          }}
         />
 
         <Stack.Screen
@@ -101,7 +92,7 @@ export default function App() {
           name='DetalhesHistorico'
           component={DetalhesHistorico}
           options={{
-            headerShown : false,
+            // headerShown : false,
             cardStyleInterpolator : CardStyleInterpolators.forVerticalIOS,
             gestureDirection : 'vertical'
           }}

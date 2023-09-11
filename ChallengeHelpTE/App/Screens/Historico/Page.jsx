@@ -4,7 +4,7 @@ import { View } from "react-native";
 import ListaHistorico from "./Components/ListaHistorico/Page";
 
 export default function Historico() {
-    
+
     return(
         <View style={styles.containter}>
             <ListaHistorico/>

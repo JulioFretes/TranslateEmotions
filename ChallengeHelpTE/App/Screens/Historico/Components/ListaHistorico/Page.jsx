@@ -1,92 +1,53 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import Item from "../Item";
+import Item from "../Item/Item";
 import { CONTAINER_CENTER } from "../../../../Theme/styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const api = axios.create({baseURL: "http://localhost:8080"})
 
 export default function ListaHistorico() {
 
-    const dados = [{
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste Tradução qualquer para teste teste tes testeteste teste testeteste teste testetesteteste',
-        traducao : 'Tradução qualquer para teste teste tes testeteste teste testeteste teste testetesteteste'
-    },
-    {
-        data : '04/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste Tradução qualquer para teste teste tes testeteste teste testeteste teste testetesteteste',
-        traducao : 'Tradução qualquer para teste teste tes testeteste teste testeteste teste testetesteteste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-    {
-        data : '03/01/2023',
-        hora : '12:00',
-        frase : 'Frase qualquer para teste',
-        traducao : 'Tradução qualquer para teste'
-    },
-]
-
     const [data, setData] = useState([]);
 
-    const api = axios.create({baseURL: "http://localhost:8080"})
+    useEffect(() => {
+        getHistorico();
+    },[])
 
-    // const getHistorico = async () => {
-    //     api.get("/historico")
-    //         .then((data) =>{
-    //             setData(data)
-    //         }
-    //     )
-    // }
+    const getHistorico = async () => {
+        const resposta = await AsyncStorage.getItem('cod_usuario')
+        api.get(`/historico/${resposta}`, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        .then((response)=>{
+            response.data.forEach(element => {
 
+                let data = new Date(element.dataHora);
+                let dia = data.getDate().toString().padStart(2, '0');
+                let mes = (data.getMonth() + 1).toString().padStart(2, '0');
+                let ano = data.getFullYear();
+
+                const dados = {
+                    data: `${dia}/${mes}/${ano}`,
+                    frase: element.frase,
+                    traducao: element.traducao,
+                    id: element.codigo
+                }
+
+                setData(prevData => [...prevData, dados]);
+            })
+        })
+    }
 
     return(
         <View style={styles.container}>
             <FlatList
-                data={dados}
-                renderItem={({ item }) => <Item {...item} />}
-                // keyExtractor={(item) => item.id}
+                data={data}
+                renderItem={({ item }) => <Item {...item}/>}
+                keyExtractor={(item) => item.id}
             /> 
         </View>  
     )

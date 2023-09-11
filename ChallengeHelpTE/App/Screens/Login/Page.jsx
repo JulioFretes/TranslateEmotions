@@ -9,6 +9,10 @@ import * as yup from 'yup'
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from 'axios';
+
+const api = axios.create({baseURL: "http://localhost:8080"})
 
 export default function Login() {
     
@@ -16,31 +20,37 @@ export default function Login() {
     const navigation = useNavigation();
 
     const schema = yup.object({
-        username: yup.string().required(t('ER_user')).min(4, t('ER_user_len')),
+        usuario: yup.string().required(t('ER_user')).min(4, t('ER_user_len')),
         senha: yup.string().min(6, t('ER_senha_len')).required(t('ER_senha'))
     })
 
     const {control, handleSubmit, formState:{ errors }} = useForm({
-        resolver: yupResolver(schema)
+       resolver: yupResolver(schema)
     })
 
     const handleLogin = (data) => {
-       console.log(data)
-       navigation.navigate('Home')
+        api.post("/login", JSON.stringify({usuario: data.usuario}), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(async (response)=>{
+            await AsyncStorage.setItem('cod_usuario', response.data.codigo);
+        })
+        navigation.navigate('Home')
     }
-
     
     return(
         <ScrollView style={{backgroundColor : WHITE}}>
             <SafeAreaView style={styles.container}>
             <Controller
                 control={control}
-                name="username"
+                name="usuario"
                 render={({ field : { onChange, onBlur, value } }) => (
-                    <CustomInput label={t('user')} placeholder={t('PH_user')} onChange={onChange} value={value} isInvalid={errors.username}/>
+                    <CustomInput label={t('user')} placeholder={t('PH_user')} onChange={onChange} value={value} isInvalid={errors.usuario}/>
                 )}
             />
-            {errors.username && <Text style={styles.error}>{errors.username?.message}</Text>}
+            {errors.usuario && <Text style={styles.error}>{errors.usuario?.message}</Text>}
 
             <Controller
                 control={control}
