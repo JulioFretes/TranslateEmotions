@@ -5,6 +5,8 @@ import Botao from "../../Components/Botao";
 import { useForm, Controller } from 'react-hook-form';
 import axios from "axios";
 import { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { CONTAINER_CENTER } from "../../Theme/styles";
 
 const api = axios.create({baseURL: "http://localhost:5000"})
 
@@ -30,7 +32,7 @@ export default function TextoInput () {
     }
 
     return(
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <Controller
                     control={control}
                     name="content"
@@ -38,7 +40,17 @@ export default function TextoInput () {
                         <CustomInput label={'Digite um texto:'} onChange={onChange} value={value}/>
                     )}
                 />
+           <View style={styles.btnView}>
             <Botao titulo={t('confirmar')} onPressBtn={handleSubmit(handleInput)}/>
+           </View>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    container : CONTAINER_CENTER,
+    btnView : {
+        width : '90%',
+        marginVertical : '5%'
+    }
+})

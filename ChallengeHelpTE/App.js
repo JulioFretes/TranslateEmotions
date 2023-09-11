@@ -12,6 +12,8 @@ import './App/language/i18n';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { changeLanguage } from 'i18next';
+import Historico from './App/Screens/Historico/Page';
+import DetalhesHistorico from './App/Screens/Detalhes/Page';
 
 
 export default function App() {
@@ -30,7 +32,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName='TextoInput' 
+        initialRouteName='Histórico' 
         screenOptions={{
           gestureEnabled : true,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
@@ -88,6 +90,21 @@ export default function App() {
       <Stack.Screen
           name='TextoInput'
           component={TextoInput}
+        />
+
+        <Stack.Screen
+          name='Histórico'
+          component={Historico}
+        />
+
+      <Stack.Screen
+          name='DetalhesHistorico'
+          component={DetalhesHistorico}
+          options={{
+            headerShown : false,
+            cardStyleInterpolator : CardStyleInterpolators.forVerticalIOS,
+            gestureDirection : 'vertical'
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

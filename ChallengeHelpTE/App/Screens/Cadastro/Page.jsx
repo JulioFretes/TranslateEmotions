@@ -49,7 +49,7 @@ export default function Cadastro() {
               'Content-Type': 'application/json'
             }
         })
-        navigation.navigate('Linguagem')
+        navigation.navigate('Login')
     }
 
 

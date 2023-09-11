@@ -1,12 +1,14 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { CONTAINER_CENTER } from "../../Theme/styles";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "react-native";
+import ListaHistorico from "./Components/ListaHistorico/Page";
 
 export default function Historico() {
+    
     return(
-        <SafeAreaView style={styles.containter}>
-            <Text>Página de hisótico das frases já avaliadas</Text>
-        </SafeAreaView>
+        <View style={styles.containter}>
+            <ListaHistorico/>
+        </View>
     )
 }
 
