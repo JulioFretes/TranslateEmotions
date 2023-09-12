@@ -15,7 +15,7 @@ const apiJava = axios.create({baseURL: "http://localhost:8080"})
 export default function TextoInput () {
 
     const { t } = useTranslation();    
-
+    const [modalVisible, setModalVisible] = useState(false);
     const [historico, setHistorico] = useState({});
     
     const {control, handleSubmit, formState:{ errors }} = useForm({
@@ -28,36 +28,57 @@ export default function TextoInput () {
               'Content-Type': 'application/json'
             }
         }).then((info)=>{
-            const dados = {
+            const dados = {                
                 dataHora: new Date().toISOString(),
                 frase: data.content,
                 traducao: info.data
             }
-            setHistorico(dados);
-            handleSalvar(dados);            
+            handleSave(dados);
             openModal()
         })
     }
 
-    const handleSalvar = async (dados) => {
+    const handleSave = async (dados) => {
         const resposta = await AsyncStorage.getItem('cod_usuario')
         apiJava.post(`/historico/${resposta}`, JSON.stringify(dados), {
             headers: {
               'Content-Type': 'application/json'
             }
+        }).then((response)=>{
+            const newHistorico = {
+                codigo: response.data.codigo,
+                dataHora: response.data.dataHora,
+                frase: response.data.frase,
+                traducao: response.data.traducao
+            }
+            setHistorico(newHistorico);
         })
     }
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const handleEdit = async () => {
+        const resposta = await AsyncStorage.getItem('cod_usuario')
 
+        apiFlask.post("/tradutor", JSON.stringify({content: historico.frase}), {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }).then((info)=>{
+            setHistorico(prevHistorico => ({ ...prevHistorico, traducao: info.data }));
+            apiJava.put(`/historico/${resposta}`, JSON.stringify(historico), {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+            })
+        })
+    }
 
     const openModal = () => {
         setModalVisible(true);
-      };
+    };
       
-      const closeModal = () => {
-        setModalVisible(false);
-      };
+    const closeModal = () => {
+    setModalVisible(false);
+    };
       
 
     return(
@@ -74,10 +95,14 @@ export default function TextoInput () {
                     animationType="fade"
                     transparent={false}
                     visible={modalVisible}
+                    
                     >
                         <View style={styles.modal}>
-                            <Text>{historico.traducao}</Text>
-                            <View style={{width : '90%'}}><Botao titulo={"Fechar"} onPressBtn={()=>{closeModal()}}/></View>
+                            <Text style={{width : '90%'}}>{historico.traducao}</Text>
+                            <View style={{width : '90%'}}>
+                                <Botao titulo={"FECHAR"} onPressBtn={closeModal}/>
+                                <Botao titulo={"EDITAR"} onPressBtn={handleEdit} stroke={true}/>
+                            </View>
                         </View>
                     </Modal>
            <View style={styles.btnView}>

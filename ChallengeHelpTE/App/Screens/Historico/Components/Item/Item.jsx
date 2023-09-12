@@ -5,7 +5,7 @@ import axios from "axios";
 
 const api = axios.create({baseURL: "http://localhost:8080"})
 
-export default function Item(props) {
+export default function Item({ onDelete, ...props }) {
 
     const navigation = useNavigation();
 
@@ -18,9 +18,9 @@ export default function Item(props) {
             headers: {
               'Content-Type': 'application/json'
             }
+        }).then(()=>{
+            onDelete();
         })
-
-        navigation.navigate('Home')
     }
 
     return(
@@ -29,7 +29,9 @@ export default function Item(props) {
                 <Text style={styles.itemData}>{props.data}</Text>
                 <Text numberOfLines={1}>{props.frase}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.delete} onPress={handleDelete}>
+            <TouchableOpacity style={styles.delete}
+                onPress={handleDelete}
+            >
                 <Text style={{textAlign : 'center'}}>Deletar</Text>
             </TouchableOpacity>
         </View>

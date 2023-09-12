@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, RefreshControl } from "react-native";
 import Item from "../Item/Item";
 import { CONTAINER_CENTER } from "../../../../Theme/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,6 +23,7 @@ export default function ListaHistorico() {
             }
         })
         .then((response)=>{
+            setData([]);
             response.data.forEach(element => {
 
                 let data = new Date(element.dataHora);
@@ -36,7 +37,6 @@ export default function ListaHistorico() {
                     traducao: element.traducao,
                     id: element.codigo
                 }
-
                 setData(prevData => [...prevData, dados]);
             })
         })
@@ -46,7 +46,7 @@ export default function ListaHistorico() {
         <View style={styles.container}>
             <FlatList
                 data={data}
-                renderItem={({ item }) => <Item {...item}/>}
+                renderItem={({ item }) => <Item {...item} onDelete={getHistorico}/>}
                 keyExtractor={(item) => item.id}
             /> 
         </View>  
