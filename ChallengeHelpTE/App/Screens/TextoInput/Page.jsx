@@ -10,7 +10,7 @@ import { CONTAINER_CENTER } from "../../Theme/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const apiFlask = axios.create({baseURL: "http://localhost:5000"})
-const apiJava = axios.create({baseURL: "http://localhost:8080"})
+const apiJava = axios.create({baseURL: "https://helpte.azurewebsites.net/api"})
 
 export default function TextoInput () {
 
@@ -34,13 +34,13 @@ export default function TextoInput () {
                 traducao: info.data
             }
             handleSave(dados);
-            openModal()
+            openModal();
         })
     }
 
     const handleSave = async (dados) => {
         const resposta = await AsyncStorage.getItem('cod_usuario')
-        apiJava.post(`/historico/${resposta}`, JSON.stringify(dados), {
+        apiJava.put(`/usuario`, JSON.stringify(dados), {
             headers: {
               'Content-Type': 'application/json'
             }

@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 
-const api = axios.create({baseURL: "http://localhost:8080"})
+const api = axios.create({baseURL: "https://helpte.azurewebsites.net/api"})
 
 export default function Cadastro() {
     
@@ -44,7 +44,7 @@ export default function Cadastro() {
     })
 
     const handleCadastro = (data) => {
-        api.post("/usuario", JSON.stringify(data), {
+        api.post("/registro", JSON.stringify(data), {
             headers: {
               'Content-Type': 'application/json'
             }

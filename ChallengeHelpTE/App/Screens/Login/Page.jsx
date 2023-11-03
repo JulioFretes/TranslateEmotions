@@ -12,13 +12,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from 'axios';
 
-const api = axios.create({baseURL: "http://localhost:8080"})
+const api = axios.create({baseURL: "https://helpte.azurewebsites.net/api"})
 
 export default function Login() {
     
     const { t } = useTranslation();
     const navigation = useNavigation();
-
+    
     const schema = yup.object({
         usuario: yup.string().required(t('ER_user')).min(4, t('ER_user_len')),
         senha: yup.string().min(6, t('ER_senha_len')).required(t('ER_senha'))
@@ -29,15 +29,20 @@ export default function Login() {
     })
 
     const handleLogin = (data) => {
-        api.post("/login", JSON.stringify({usuario: data.usuario}), {
+        api.post("/login", JSON.stringify({email: data.usuario, senha: data.senha}), {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         .then(async (response)=>{
-            await AsyncStorage.setItem('cod_usuario', response.data.codigo);
-        })
-        navigation.navigate('Home')
+            const tokenString = response.data.token.token
+            const userString = JSON.stringify(response.data.user);
+        
+            await AsyncStorage.setItem('token', tokenString);
+            await AsyncStorage.setItem('user', userString);
+
+            navigation.navigate('Home');
+        }) 
     }
     
     return(
