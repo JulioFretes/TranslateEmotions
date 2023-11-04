@@ -1,9 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COR_BOTAO_ACAO } from '../../../../utils/constants'
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 
-const api = axios.create({baseURL: "https://helpte.azurewebsites.net/api"})
+function formataData (data) {
+    const stringData = String(data)
+    return `${stringData.substring(8, 10)}/${stringData.substring(5, 7)}/${stringData.substring(0, 4)}`
+}
 
 export default function Item({ onDelete, ...props }) {
 
@@ -13,24 +15,14 @@ export default function Item({ onDelete, ...props }) {
         navigation.navigate('DetalhesHistorico', {...props})
     }
 
-    const handleDelete = () => {
-        api.delete(`/historico/${props.id}`, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-        }).then(()=>{
-            onDelete();
-        })
-    }
-
     return(
         <View style={styles.row}>
             <TouchableOpacity onPress={handleNavigation}>
-                <Text style={styles.itemData}>{props.data}</Text>
+                <Text style={styles.itemData}>{formataData(props.dataHora)}</Text>
                 <Text numberOfLines={1}>{props.frase}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.delete}
-                onPress={handleDelete}
+                onPress={() => {onDelete(props.index)}}
             >
                 <Text style={{textAlign : 'center'}}>Deletar</Text>
             </TouchableOpacity>

@@ -17,12 +17,11 @@ export default function Historico() {
        const userString =  await AsyncStorage.getItem('user');
        const user = JSON.parse(userString);
        setUser(user);
-       console.log(user);
     }
 
     return(
         <View style={styles.containter}>
-            <ListaHistorico user={user}/>
+            <ListaHistorico user={user} getUser={getUser}/>
         </View>
     )
 }

@@ -2,12 +2,17 @@ import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CONTAINER_CENTER } from "../../Theme/styles";
 
+function formataData (data) {
+    const stringData = String(data)
+    return `${stringData.substring(8, 10)}/${stringData.substring(5, 7)}/${stringData.substring(0, 4)}`
+}
+
 export default function DetalhesHistorico(props) {
-    const { data, hora, frase, traducao } = props.route.params;
+    const { dataHora, frase, traducao } = props.route.params;
     
     return(
         <SafeAreaView style={styles.container}>
-            <Text>Data da tradução: {data} - {hora}</Text>
+            <Text>Data da tradução: {formataData(dataHora)}</Text>
 
             <View style={styles.viewFrase}>
                 <Text style={styles.texto}><Text style={styles.titulo}>DIÁLOGO:</Text> {frase}</Text>

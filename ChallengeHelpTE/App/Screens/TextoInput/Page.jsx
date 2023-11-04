@@ -28,10 +28,11 @@ export default function TextoInput () {
               'Content-Type': 'application/json'
             }
         }).then((info)=>{
-            const dados = {                
+            const dados = {
                 dataHora: new Date().toISOString(),
                 frase: data.content,
-                traducao: info.data
+                traducao: info.data,
+                isDeletado: false
             }
             handleSave(dados);
             openModal();
@@ -39,19 +40,20 @@ export default function TextoInput () {
     }
 
     const handleSave = async (dados) => {
-        const resposta = await AsyncStorage.getItem('cod_usuario')
-        apiJava.put(`/usuario`, JSON.stringify(dados), {
+        const userString =  await AsyncStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const token = await AsyncStorage.getItem('token');
+        user.historicos = [...user.historicos, dados]
+        user.authorities = null;
+        apiJava.put(`/usuario`, JSON.stringify(user), {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
             }
-        }).then((response)=>{
-            const newHistorico = {
-                codigo: response.data.codigo,
-                dataHora: response.data.dataHora,
-                frase: response.data.frase,
-                traducao: response.data.traducao
-            }
-            setHistorico(newHistorico);
+        }).then(async (response)=>{            
+            const userString = JSON.stringify(response.data);
+            await AsyncStorage.setItem('user', userString);
+            setHistorico(dados);
         })
     }
 
